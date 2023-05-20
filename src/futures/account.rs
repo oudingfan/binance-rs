@@ -128,6 +128,7 @@ struct OrderRequest {
     pub callback_rate: Option<f64>,
     pub working_type: Option<WorkingType>,
     pub price_protect: Option<f64>,
+    pub new_client_order_id: Option<String>,
 }
 
 pub struct CustomOrderRequest {
@@ -145,6 +146,7 @@ pub struct CustomOrderRequest {
     pub callback_rate: Option<f64>,
     pub working_type: Option<WorkingType>,
     pub price_protect: Option<f64>,
+    pub new_client_order_id: Option<String>,
 }
 
 pub struct IncomeRequest {
@@ -224,6 +226,7 @@ impl FuturesAccount {
             callback_rate: None,
             working_type: None,
             price_protect: None,
+            new_client_order_id: None,
         };
         let order = self.build_order(buy);
         let request = build_signed_request(order, self.recv_window)?;
@@ -250,6 +253,7 @@ impl FuturesAccount {
             callback_rate: None,
             working_type: None,
             price_protect: None,
+            new_client_order_id: None,
         };
         let order = self.build_order(sell);
         let request = build_signed_request(order, self.recv_window)?;
@@ -278,6 +282,7 @@ impl FuturesAccount {
             callback_rate: None,
             working_type: None,
             price_protect: None,
+            new_client_order_id: None,
         };
         let order = self.build_order(buy);
         let request = build_signed_request(order, self.recv_window)?;
@@ -306,6 +311,7 @@ impl FuturesAccount {
             callback_rate: None,
             working_type: None,
             price_protect: None,
+            new_client_order_id: None,
         };
         let order = self.build_order(sell);
         let request = build_signed_request(order, self.recv_window)?;
@@ -362,6 +368,7 @@ impl FuturesAccount {
             callback_rate: None,
             working_type: None,
             price_protect: None,
+            new_client_order_id: None,
         };
         let order = self.build_order(sell);
         let request = build_signed_request(order, self.recv_window)?;
@@ -390,6 +397,7 @@ impl FuturesAccount {
             callback_rate: None,
             working_type: None,
             price_protect: None,
+            new_client_order_id: None,
         };
         let order = self.build_order(sell);
         let request = build_signed_request(order, self.recv_window)?;
@@ -414,6 +422,7 @@ impl FuturesAccount {
             callback_rate: order_request.callback_rate,
             working_type: order_request.working_type,
             price_protect: order_request.price_protect,
+            new_client_order_id: order_request.new_client_order_id,
         };
         let order = self.build_order(order);
         let request = build_signed_request(order, self.recv_window)?;
@@ -524,6 +533,9 @@ impl FuturesAccount {
                 "priceProtect".into(),
                 price_protect.to_string().to_uppercase(),
             );
+        }
+        if let Some(new_client_order_id) = order.new_client_order_id {
+            parameters.insert("newClientOrderId".into(), new_client_order_id);
         }
 
         parameters
