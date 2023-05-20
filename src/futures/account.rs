@@ -7,7 +7,7 @@ use crate::client::Client;
 use crate::api::{API, Futures};
 use crate::model::Empty;
 use crate::account::OrderSide;
-use crate::futures::model::{Order, TradeHistory};
+use crate::futures::model::{OrderHistory, TradeHistory};
 
 use super::model::{
     ChangeLeverageResponse, Transaction, CanceledOrder, PositionRisk, AccountBalance,
@@ -423,7 +423,7 @@ impl FuturesAccount {
 
     pub fn get_all_orders<S, F, N>(
         &self, symbol: S, order_id: F, start_time: F, end_time: F, limit: N,
-    ) -> Result<Vec<Order>>
+    ) -> Result<Vec<OrderHistory>>
     where
         S: Into<Option<String>>,
         F: Into<Option<u64>>,
