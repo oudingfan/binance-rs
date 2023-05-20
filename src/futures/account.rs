@@ -425,12 +425,14 @@ impl FuturesAccount {
         &self, symbol: S, order_id: F, start_time: F, end_time: F, limit: N,
     ) -> Result<Vec<Order>>
     where
-        S: Into<String>,
+        S: Into<Option<String>>,
         F: Into<Option<u64>>,
         N: Into<Option<u16>>,
     {
         let mut parameters = BTreeMap::new();
-        parameters.insert("symbol".into(), symbol.into());
+        if let Some(symbol) = symbol.into() {
+            parameters.insert("symbol".into(), symbol.into());
+        }
         if let Some(order_id) = order_id.into() {
             parameters.insert("orderId".into(), order_id.to_string());
         }
@@ -453,12 +455,14 @@ impl FuturesAccount {
         &self, symbol: S, from_id: F, start_time: F, end_time: F, limit: N,
     ) -> Result<Vec<TradeHistory>>
     where
-        S: Into<String>,
+        S: Into<Option<String>>,
         F: Into<Option<u64>>,
         N: Into<Option<u16>>,
     {
         let mut parameters = BTreeMap::new();
-        parameters.insert("symbol".into(), symbol.into());
+        if let Some(symbol) = symbol.into() {
+            parameters.insert("symbol".into(), symbol.into());
+        }
         if let Some(order_id) = from_id.into() {
             parameters.insert("fromId".into(), order_id.to_string());
         }
